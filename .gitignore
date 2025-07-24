@@ -1,0 +1,5 @@
+matrix.txt
+.vscode/
+build/
+*.exe
+test.cpp
