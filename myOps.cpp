@@ -74,4 +74,19 @@ void myMatVecMulAdd(const float32 *W, const float32 *X, const float32 *B, float3
 
 }
 
+float32 myMSE(const float32* Y_true, const float32* Y_pred, const uint32 length)
+{
+    float sum = 0.0f;
+    for(int i = 0; i < length; i++){
+        sum += (Y_true[i] - Y_pred[i]) * (Y_true[i] - Y_pred[i]) ;
+    }
+    sum = sum / length;
+    return sum;
+}
 
+void myMSEgrad(const float32* Y_true, const float32* Y_pred, float32* grad, const uint32 length)
+{
+    for(int i = 0; i < length; i++){
+        grad[i] = 2.0f * (Y_pred[i] - Y_true[i]) / length;
+    }
+}

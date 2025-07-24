@@ -18,6 +18,10 @@
             myMatAdd
             myMatMul2D
             myMatVecMulAdd
+            myReLU
+            myReLUDeriv
+            mySigmoid
+            mySigmoidDeriv
  */
 
 /* ***************************************************************************************************************** */
@@ -124,15 +128,52 @@ inline float32 mySigmoidDeriv(float32 X)
 }
 
 /**
- * Computes the sigmoid activation function for a single float32 input.
- * Formula: sigmoid(x) = 1 / (1 + exp(-x))
+ * Computes the ReLU activation function for a single float32 input.
+ * Formula: ReLU(x) = max(X,0)
  * Input:  X (float32) - the input value
- * Returns: (float32) sigmoid activation in the range (0, 1)
+ * Returns: (float32) ReLU activation in the range (0, X)
  */                                    
 inline float32 myReLU(float32 X)
 {
-    return 1.0f / (1.0f + expf(-X));
+    return X > 0.0f ? X : 0.0f;
 }
+
+/**
+ * Computes the derivative of the ReLU activation function for a single float32 input.
+ * Formula: ReLU'(x) = 1 if X > 0, else = 0
+ * Input:  X (float32) - the input value
+ * Returns: (float32) derivative of ReLU at X
+ */
+inline float32 myReLUDeriv(float32 X)
+{
+    return X > 0.0f ? 1.0f : 0.0f;
+}
+
+/**
+ * @brief Computes the Mean Squared Error (MSE) loss between two arrays.
+ *
+ * Calculates the average of the squared differences between true values and predicted values.
+ * Commonly used as a loss function for regression tasks in neural networks.
+ *
+ * @param Y_true   Pointer to the array of true (target) values.
+ * @param Y_pred   Pointer to the array of predicted values.
+ * @param length   Number of elements in the arrays.
+ * @return         The MSE loss as a float32.
+ */
+float32 myMSE(const float32* Y_true, const float32* Y_pred, const uint32 length);
+
+/**
+ * @brief Computes the gradient (derivative) of Mean Squared Error (MSE) loss w.r.t. predictions.
+ *
+ * For each element, computes the partial derivative of the MSE loss with respect to Y_pred,
+ * and writes it to the output gradient array. Used during neural network backpropagation.
+ *
+ * @param Y_true   Pointer to the array of true (target) values.
+ * @param Y_pred   Pointer to the array of predicted values.
+ * @param grad     Pointer to the array where the gradient will be stored (output).
+ * @param length   Number of elements in the arrays.
+ */
+void myMSEgrad(const float32* Y_true, const float32* Y_pred, float32* grad, const uint32 length);
 
 /*************************************************************/
 #endif // MY_OPS_H
