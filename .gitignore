@@ -3,3 +3,4 @@ matrix.txt
 build/
 *.exe
 test.cpp
+app

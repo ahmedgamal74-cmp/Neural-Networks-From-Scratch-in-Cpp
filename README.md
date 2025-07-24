@@ -19,11 +19,11 @@ Welcome! This repository is a personal journey and open playground to **implemen
 
 ## ✨ Features (Planned and Completed)
 
+- [x] Matrix multiplication, dot product
 - [x] Sigmoid activation and its derivative
 - [x] Tanh and ReLU activations
 - [x] Mean Squared Error loss
-- [x] Manual forward/backward for 1-hidden-layer MLP
-- [ ] Matrix multiplication, dot product
+- [ ] Manual forward/backward for 1-hidden-layer MLP
 - [ ] SGD optimizer
 - [ ] Softmax and Cross Entropy
 - [ ] Convolution (1D/2D)
