@@ -123,5 +123,16 @@ inline float32 mySigmoidDeriv(float32 X)
     return sig * (1.0f - sig);
 }
 
+/**
+ * Computes the sigmoid activation function for a single float32 input.
+ * Formula: sigmoid(x) = 1 / (1 + exp(-x))
+ * Input:  X (float32) - the input value
+ * Returns: (float32) sigmoid activation in the range (0, 1)
+ */                                    
+inline float32 myReLU(float32 X)
+{
+    return 1.0f / (1.0f + expf(-X));
+}
+
 /*************************************************************/
 #endif // MY_OPS_H
