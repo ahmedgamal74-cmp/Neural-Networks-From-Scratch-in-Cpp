@@ -1,6 +1,6 @@
+app
 matrix.txt
 .vscode/
 build/
 *.exe
 test.cpp
-app
