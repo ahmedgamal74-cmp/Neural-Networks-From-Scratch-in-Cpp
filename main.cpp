@@ -79,18 +79,21 @@ int main() {
 
 
 
-	// Test values
-    double test_vals[] = {-3, -1, 0, 1, 3};
-    int n = sizeof(test_vals) / sizeof(double);
+	// // Test values
+    // double test_vals[] = {-3, -1, 0, 1, 3};
+    // int n = sizeof(test_vals) / sizeof(double);
 
-    std::cout << "x\tSigmoid(x)\tSigmoid'(x)\n";
-    std::cout << "---------------------------------\n";
-    for(int i = 0; i < n; ++i) {
-        double x = test_vals[i];
-        double sx = mySigmoid(x);
-        double dsx = mySigmoidDeriv(x);
-        std::cout << x << "\t" << sx << "\t" << dsx << std::endl;
-    }
+    // std::cout << "x\tSigmoid(x)\tSigmoid'(x)\n";
+    // std::cout << "---------------------------------\n";
+    // for(int i = 0; i < n; ++i) {
+    //     double x = test_vals[i];
+    //     double sx = mySigmoid(x);
+    //     double dsx = mySigmoidDeriv(x);
+    //     std::cout << x << "\t" << sx << "\t" << dsx << std::endl;
+    // }
+
+	
+
 
 	std::cout<<"---------------------------------------------------------------------------------------------------"<<std::endl;
 	return 0;
