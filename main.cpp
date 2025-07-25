@@ -92,9 +92,16 @@ int main() {
     //     std::cout << x << "\t" << sx << "\t" << dsx << std::endl;
     // }
 
-	
+	float32 weight_matrix[4] = {0.0, 0.5, 1.5, 2.0};
+	float32 grads[4] = {0.0, 0.5, 1.5, 2.0};
 
+	myGradientDescent(weight_matrix, grads, 0.5, 1, 4);
 
+	for(int i = 0; i < 4; i++){
+		printf(" %f 	", weight_matrix[i]);
+	}
+
+	std::cout<<std::endl;
 	std::cout<<"---------------------------------------------------------------------------------------------------"<<std::endl;
 	return 0;
 }

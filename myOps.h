@@ -201,7 +201,15 @@ float32 myBinaryCrossEntropy(const float32* Y_true, const float32* Y_pred, const
  */
 void myBinaryCrossEntropyGrad(const float32* Y_true, const float32* Y_pred, float32* grad, const uint32 length);
 
-
+/**
+ * @brief Performs SGD update for a parameter array.
+ * 
+ * @param param       Pointer to parameter array (weights, biases, etc).
+ * @param grad        Pointer to gradient array (same shape as param).
+ * @param length      Number of elements.
+ * @param lr          Learning rate (step size).
+ */
+void myGradientDescent(float32* W, const float32* grads, float32 LR, const uint32 w_a, const uint32 w_b);
 
 
 

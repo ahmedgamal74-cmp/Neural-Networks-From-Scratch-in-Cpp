@@ -127,7 +127,13 @@ void myBinaryCrossEntropyGrad(const float32* Y_true, const float32* Y_pred, floa
     }
 }
 
-
+void myGradientDescent(float32* W, const float32* grads, float32 LR, const uint32 w_a, const uint32 w_b)
+{
+    uint32 length = w_a * w_b;
+    for(uint32 i = 0; i < length; i++){
+        W[i] -= LR * grads[i];
+    }
+}
 
 
 
