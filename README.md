@@ -23,9 +23,9 @@ Welcome! This repository is a personal journey and open playground to **implemen
 - [x] Sigmoid activation and its derivative
 - [x] Tanh and ReLU activations
 - [x] Mean Squared Error loss
-- [ ] Manual forward/backward for 1-hidden-layer MLP
-- [ ] SGD optimizer
-- [ ] Softmax and Cross Entropy
+- [x] Manual forward/backward for 1-hidden-layer MLP
+- [x] SGD optimizer
+- [x] Softmax and Cross Entropy
 - [ ] Convolution (1D/2D)
 - [ ] Pooling layers
 - [ ] Batch Normalization

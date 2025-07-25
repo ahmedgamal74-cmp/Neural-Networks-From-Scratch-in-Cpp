@@ -74,19 +74,196 @@ void myMatVecMulAdd(const float32 *W, const float32 *X, const float32 *B, float3
 
 }
 
-float32 myMSE(const float32* Y_true, const float32* Y_pred, const uint32 length)
+float32 myMeanSquaredError(const float32* Y_true, const float32* Y_pred, const uint32 length)
 {
     float sum = 0.0f;
-    for(int i = 0; i < length; i++){
+    for(uint32 i = 0; i < length; i++){
         sum += (Y_true[i] - Y_pred[i]) * (Y_true[i] - Y_pred[i]) ;
     }
     sum = sum / length;
     return sum;
 }
 
-void myMSEgrad(const float32* Y_true, const float32* Y_pred, float32* grad, const uint32 length)
+void myMeanSquaredErrorGrad(const float32* Y_true, const float32* Y_pred, float32* grad, const uint32 length)
 {
-    for(int i = 0; i < length; i++){
+    for(uint32 i = 0; i < length; i++){
         grad[i] = 2.0f * (Y_pred[i] - Y_true[i]) / length;
     }
 }
+
+float32 myBinaryCrossEntropy(const float32* Y_true, const float32* Y_pred, const uint32 length)
+{
+    float sum = 0.0f;
+
+
+    for(uint32 i = 0; i < length; i++){
+
+        float32 y_pred_temp = Y_pred[i];
+
+        if(y_pred_temp < 1e-7f)
+            y_pred_temp = 1e-7f;
+        else if(y_pred_temp > (1.0f - 1e-7f))
+            y_pred_temp = 1.0f - 1e-7f;
+
+
+        sum += -Y_true[i] * logf(y_pred_temp) - (1.0f - Y_true[i]) * logf(1.0f - y_pred_temp);
+    }
+    sum = sum / length;
+    return sum;
+}
+
+void myBinaryCrossEntropyGrad(const float32* Y_true, const float32* Y_pred, float32* grad, const uint32 length)
+{
+    for(uint32 i = 0; i < length; i++){
+
+        float32 y_pred_temp = Y_pred[i];
+
+        if(y_pred_temp < 1e-7f)
+            y_pred_temp = 1e-7f;
+        else if(y_pred_temp > (1.0f - 1e-7f))
+            y_pred_temp = 1.0f - 1e-7f;
+
+        grad[i] = (y_pred_temp - Y_true[i]) / (y_pred_temp * (1.0f - y_pred_temp) * length);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

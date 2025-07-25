@@ -160,7 +160,7 @@ inline float32 myReLUDeriv(float32 X)
  * @param length   Number of elements in the arrays.
  * @return         The MSE loss as a float32.
  */
-float32 myMSE(const float32* Y_true, const float32* Y_pred, const uint32 length);
+float32 myMeanSquaredError(const float32* Y_true, const float32* Y_pred, const uint32 length);
 
 /**
  * @brief Computes the gradient (derivative) of Mean Squared Error (MSE) loss w.r.t. predictions.
@@ -173,7 +173,37 @@ float32 myMSE(const float32* Y_true, const float32* Y_pred, const uint32 length)
  * @param grad     Pointer to the array where the gradient will be stored (output).
  * @param length   Number of elements in the arrays.
  */
-void myMSEgrad(const float32* Y_true, const float32* Y_pred, float32* grad, const uint32 length);
+void myMeanSquaredErrorGrad(const float32* Y_true, const float32* Y_pred, float32* grad, const uint32 length);
+
+/**
+ * @brief Computes the binary cross entropy loss between two arrays.
+ *
+ * Calculates the cross entropy between true values and predicted values.
+ * Commonly used as a loss function for classififcation tasks in neural networks.
+ *
+ * @param Y_true   Pointer to the array of true (target) values.
+ * @param Y_pred   Pointer to the array of predicted values.
+ * @param length   Number of elements in the arrays.
+ * @return         The binary cross entropy loss as a float32.
+ */
+float32 myBinaryCrossEntropy(const float32* Y_true, const float32* Y_pred, const uint32 length);
+
+/**
+ * @brief Computes the gradient (derivative) of binary cross entropy loss loss w.r.t. predictions.
+ *
+ * For each element, computes the partial derivative of the binary cross entropy loss with respect to Y_pred,
+ * and writes it to the output gradient array. Used during neural network backpropagation.
+ *
+ * @param Y_true   Pointer to the array of true (target) values.
+ * @param Y_pred   Pointer to the array of predicted values.
+ * @param grad     Pointer to the array where the gradient will be stored (output).
+ * @param length   Number of elements in the arrays.
+ */
+void myBinaryCrossEntropyGrad(const float32* Y_true, const float32* Y_pred, float32* grad, const uint32 length);
+
+
+
+
 
 /*************************************************************/
 #endif // MY_OPS_H
