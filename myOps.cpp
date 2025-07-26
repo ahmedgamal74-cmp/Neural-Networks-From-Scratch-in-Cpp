@@ -1,14 +1,35 @@
 #include "myOps.h"
 
-void myMatTranspose(const float32 *X, const uint32 m_x, const uint32 n_x)
+void myPrintMatrix(const float32* arr, const uint32 arr_m, const uint32 arr_n)
 {
-
+    for(uint32 i = 0; i < arr_m; i++){
+        for(uint32 j = 0; j < arr_n; j++){
+            printf(" %f     ", arr[i * arr_n + j]);
+        }
+        printf("\n");
+    }
 }
 
-void myRandomIntegarArrayGenerator(int32* array, uint32 length, int32 min, int32 max)
+void myRandomInitializerWithNormalDistribution(float32* array, const uint32 length, const float32 mean, const float32 std_dev)
 {
+    float32 n1=0.0f, n2=0.0f, norm_var=0.0f;
     for(uint32 i=0; i<length; i++){
-        array[i] = min + rand() % (max-min+1);
+
+        n1 = float32(rand()) / float32(RAND_MAX);
+        n2 = float32(rand()) / float32(RAND_MAX);
+
+        norm_var = sqrt(-2.0f * logf(n1 + 1e-7f)) * cosf(2.0f * PI * n2);
+
+        array[i] = norm_var*std_dev + mean;
+    }
+}
+
+void myMatrixTranspose(const float32 *X, float32* X_T, const uint32 m_x, const uint32 n_x)
+{
+    for (uint32 i = 0; i < m_x; i++){
+        for (uint32 j = 0; j < n_x; j++){
+            X_T[j * m_x + i] = X[i * n_x + j];
+        }
     }
 }
 

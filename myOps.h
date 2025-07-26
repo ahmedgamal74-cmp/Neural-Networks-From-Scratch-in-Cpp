@@ -13,6 +13,7 @@
 #include <cstdlib>
 
 #include "typedefs.h"
+#include "config.h"
 
 /** Done yet:
             myMatAdd
@@ -26,9 +27,41 @@
 
 /* ***************************************************************************************************************** */
 
-void myMatTranspose(const float32 *X, const uint32 m_x, const uint32 n_x);
+/**
+ * Prints contents of a Matrix
+ */
+void myPrintMatrix(const float32* arr, const uint32 arr_m, const uint32 arr_n);
 
-void myRandomIntegarArrayGenerator(int32* array, uint32 length, int32 min, int32 max);
+/**
+ * @brief Initializes an array with random values drawn from a normal distribution.
+ *
+ * This function fills the provided array with floating-point values generated using the
+ * Box-Muller transform to approximate a Gaussian (normal) distribution. The resulting values
+ * follow a distribution with the specified mean and standard deviation.
+ *
+ * @param array      Pointer to the array to be initialized.
+ * @param length     Number of elements in the array.
+ * @param mean       Mean (μ) of the normal distribution.
+ * @param std_dev    Standard deviation (σ) of the normal distribution.
+ *
+ * @note Uses the Box-Muller transform with uniformly distributed random numbers from rand().
+ *       Adds a small constant (1e-7) to avoid log(0), which would result in undefined behavior.
+ *       For better statistical properties, consider using a higher-quality random number generator.
+ */
+void myRandomInitializerWithNormalDistribution(float32* array, const uint32 length, const float32 mean, const float32 std);
+
+/**
+ * @brief Transposes a matrix stored in row-major order.
+ *
+ * This function takes a matrix `X` of dimensions `m_x` x `n_x` stored in row-major order
+ * and computes its transpose, storing the result in `X_T`, also in row-major order.
+ *
+ * @param X     Pointer to the input matrix of size (m_x x n_x), stored in row-major order.
+ * @param X_T   Pointer to the output matrix to store the transpose (size n_x x m_x).
+ * @param m_x   Number of rows in the input matrix X.
+ * @param n_x   Number of columns in the input matrix X.
+ */
+void myMatrixTranspose(const float32 *X, float32* X_T, const uint32 m_x, const uint32 n_x);
 
 /**
  * @brief Multiplies two 2D matrices of arbitrary size (row-major, flat arrays).

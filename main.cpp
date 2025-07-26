@@ -8,14 +8,20 @@
 #include <ctime>
 #include <cstdlib>
 #include <assert.h>
+#include <cstdlib>  
+#include <cmath>    
+#include <ctime> 
+#include <random> 
 
 #include "typedefs.h"
 #include "myOps.h"
+#include "config.h"
 
 // using namespace std;
 // using Matrix = std::vector<std::vector<int>>;
 
 int main() {
+	srand(static_cast<unsigned int>(time(0)));
 	std::cout<<"---------------------------------------------------------------------------------------------------"<<std::endl;
 	// srand(time(nullptr));
 	
@@ -92,14 +98,85 @@ int main() {
     //     std::cout << x << "\t" << sx << "\t" << dsx << std::endl;
     // }
 
-	float32 weight_matrix[4] = {0.0, 0.5, 1.5, 2.0};
-	float32 grads[4] = {0.0, 0.5, 1.5, 2.0};
+	// float32 weight_matrix[4] = {0.0, 0.5, 1.5, 2.0};
+	// float32 grads[4] = {0.0, 0.5, 1.5, 2.0};
 
-	myGradientDescent(weight_matrix, grads, 0.5, 1, 4);
+	// myGradientDescent(weight_matrix, grads, 0.5, 1, 4);
 
-	for(int i = 0; i < 4; i++){
-		printf(" %f 	", weight_matrix[i]);
-	}
+	// for(int i = 0; i < 4; i++){
+	// 	printf(" %f 	", weight_matrix[i]);
+	// }
+
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	const uint32 DataSamplesCount = 4;
+	const uint32 DataFeatures = 2;
+
+	const float32 X[DataSamplesCount][DataFeatures] = {
+		{0, 0},
+		{0, 1},
+		{1, 0},
+		{1 ,1},
+	};
+
+	const float32 y[DataSamplesCount] = {
+		{0},
+		{1},
+		{1},
+		{0},
+	};
+
+	// printf("Data: \n");
+	// myPrintMatrix(&X[0][0], 4, 2);	
+	// printf("Labels: \n");
+	// myPrintMatrix(&y[0], 4, 1);
+
+	printf("Data: \n");
+	printf(" X1	       X2           y \n");
+    for(uint32 i = 0; i < DataSamplesCount; i++){
+        for(uint32 j = 0; j < DataFeatures; j++){
+            printf(" %f     ", X[i][j]);
+        }
+		printf("%f", y[i]);
+        printf("\n");
+    }
+	printf("------------------------------------\n");
+
+	const uint32 input_size = DataFeatures;
+	const uint32 hidden_layer_size = 2;
+	const uint32 output_layer_size = 1;
+
+	float32 W1[hidden_layer_size][input_size];
+	float32 b1[hidden_layer_size][1];
+	float32 W2[output_layer_size][hidden_layer_size];
+	float32 b2[output_layer_size][1];
+
+
+	myRandomInitializerWithNormalDistribution(&W1[0][0], hidden_layer_size*input_size, 0.0f, 1.0f);
+	myRandomInitializerWithNormalDistribution(&b1[0][0], hidden_layer_size*1, 0.0f, 1.0f);
+	myRandomInitializerWithNormalDistribution(&W2[0][0], output_layer_size*hidden_layer_size, 0.0f, 1.0f);
+	myRandomInitializerWithNormalDistribution(&b2[0][0], output_layer_size*1, 0.0f, 1.0f);
+
+	// W1 -> H*I , X -> 
+	//float32 z1[][];
+	
+	float32 X_T[2][4];
+	myMatrixTranspose(&X[0][0], &X_T[0][0], 4, 2);
+	myPrintMatrix(&X[0][0], 4, 2);
+	myPrintMatrix(&X_T[0][0], 2, 4);
+
+
+	float32 X2[2][3] = {
+    {1, 2, 3},
+    {4, 5, 6}
+	};
+	float32 X_T2[3][2];
+	myMatrixTranspose(&X2[0][0], &X_T2[0][0], 2, 3);
+	myPrintMatrix(&X2[0][0], 2, 3);
+	myPrintMatrix(&X_T2[0][0], 3, 2);
+
+
+
 
 	std::cout<<std::endl;
 	std::cout<<"---------------------------------------------------------------------------------------------------"<<std::endl;
