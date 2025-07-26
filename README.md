@@ -54,8 +54,7 @@ git clone https://github.com/yourusername/Neural-Networks-in-Cpp.git
 cd Neural-Networks-in-Cpp
 mkdir build && cd build
 cmake ..
-make
-./NN_cpp      # or whatever the executable is called
+make run
 ```
 
 ## 📁 Project Structure
