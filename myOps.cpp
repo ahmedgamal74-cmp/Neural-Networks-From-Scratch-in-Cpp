@@ -37,7 +37,7 @@ void myMatMul2D(const float32 *A, const float32 *B, float32 *C,
                                    const uint32 m_a, const uint32 n_a, const uint32 m_b, const uint32 n_b)
 {
     if(n_a != m_b){
-        printf("ERROR: matrices sizes are NOT matched. \n");
+        printf("ERROR myMatMul2D: matrices sizes are NOT matched. \n");
         assert(0);
         return;
     }
@@ -59,7 +59,7 @@ void myMatAdd(const float32 *A, const float32 *B, float32 *C,
                                    const uint32 m_a, const uint32 n_a, const uint32 m_b, const uint32 n_b)
 {
     if((m_a != m_b) || n_a != n_b){
-        printf("ERROR: matrices sizes are NOT matched. \n");
+        printf("ERROR myMatAdd: matrices sizes are NOT matched. \n");
         assert(0);
         return;
     } 
