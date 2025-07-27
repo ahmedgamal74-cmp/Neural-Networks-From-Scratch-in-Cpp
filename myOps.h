@@ -183,6 +183,27 @@ inline float32 myReLUDeriv(float32 X)
 }
 
 /**
+ * Computes the ReLU activation function for a single float32 input.
+ * Formula: ReLU(x) = max(X,0)
+ * Input:  X (float32) - the input value
+ * Returns: (float32) ReLU activation in the range (0, X)
+ */  
+inline float32 myLeakyReLU(float32 x) {
+    return x > 0 ? x : 0.01f * x;
+}
+
+/**
+ * Computes the derivative of the ReLU activation function for a single float32 input.
+ * Formula: ReLU'(x) = 1 if X > 0, else = 0
+ * Input:  X (float32) - the input value
+ * Returns: (float32) derivative of ReLU at X
+ */
+inline float32 myLeakyReLUDeriv(float32 x) {
+    return x > 0 ? 1.0f : 0.01f;
+}
+
+
+/**
  * @brief Computes the Mean Squared Error (MSE) loss between two arrays.
  *
  * Calculates the average of the squared differences between true values and predicted values.
@@ -247,8 +268,7 @@ void myBinaryCrossEntropyGrad(const float32* Y_true, const float32* Y_pred, floa
  * @param w_a    First dimension of weight matrix.
  * @param w_b    Second dimension of weight matrix.
  */
-void myGradientDescent(float32* W, const float32* grads, float32 LR, const uint32 w_a, const uint32 w_b);
-
+void myGradientDescent(const float32* grads, float32* W, float32 LR, const uint32 w_a, const uint32 w_b);
 
 
 /*************************************************************/

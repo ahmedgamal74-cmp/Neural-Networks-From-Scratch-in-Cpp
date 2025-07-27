@@ -73,7 +73,7 @@ void myMatAdd(const float32 *A, const float32 *B, float32 *C,
 }
 
 void myMatVecMulAdd(const float32 *W, const float32 *X, const float32 *B, float32 *Y,
-                                   const uint32 m_w, const uint32 n_w, const uint32 m_x, const uint32 m_b)
+                                   const uint32 m_w, const uint32 n_w, const uint32 m_x, const uint32 n_x)
 {
     // if((m_w != m_b) || m_x != n_w){
     //     printf("ERROR: matrices sizes are NOT matched. \n");
@@ -90,8 +90,13 @@ void myMatVecMulAdd(const float32 *W, const float32 *X, const float32 *B, float3
     //     Y[i] += B[i];
     // }
 
-    myMatMul2D(W, X, Y, m_w, n_w, n_w, 1);
-    myMatAdd(Y, B, Y, m_w, 1, m_b, 1);     
+    myMatMul2D(W, X, Y, m_w, n_w, m_x, n_x);
+    // myMatAdd(Y, B, Y, m_w, n_x, m_w, 1);  
+    for(uint32 i = 0; i < m_w; i++){
+        for(uint32 j = 0; j < n_x; j++){
+            Y[j + i*n_x] += B[i];
+        }
+    }   
 
 }
 
@@ -148,7 +153,7 @@ void myBinaryCrossEntropyGrad(const float32* Y_true, const float32* Y_pred, floa
     }
 }
 
-void myGradientDescent(float32* W, const float32* grads, float32 LR, const uint32 w_a, const uint32 w_b)
+void myGradientDescent(const float32* grads, float32* W, float32 LR, const uint32 w_a, const uint32 w_b)
 {
     uint32 length = w_a * w_b;
     for(uint32 i = 0; i < length; i++){

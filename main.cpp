@@ -20,94 +20,30 @@
 // using namespace std;
 // using Matrix = std::vector<std::vector<int>>;
 
+#include <sys/stat.h>
+#include <sys/types.h>
+
+void writeMatrixToFile(FILE* f, const char* label, float32* mat, uint32 rows, uint32 cols)
+{
+    fprintf(f, "# %s (%ux%u)\n", label, rows, cols);
+
+    for (uint32 i = 0; i < rows; i++) {
+        for (uint32 j = 0; j < cols; j++) {
+            fprintf(f, "%f ", mat[i * cols + j]);
+        }
+        fprintf(f, "\n");
+    }
+}
+
+
 int main() {
 	srand(static_cast<unsigned int>(time(0)));
-	std::cout<<"---------------------------------------------------------------------------------------------------"<<std::endl;
 	// srand(time(nullptr));
-	
-	// // Set the precision for floating-point output
 	// std::cout << std::fixed << std::setprecision(6);
-
-	// int32 arr[2][2] = {{1, 2}, {3, 4}};
-	// printf("%i \n", arr[0][0]); 
-
-	// float32 A[2][3] = {
-    //     {1, 2, 3},
-    //     {4, 5, 6}
-    // };
-    // float32 B[3][2] = {
-    //     {7, 8},
-    //     {9, 10},
-    //     {11, 12}
-    // };
-    // float32 C[2][2] = {{1,2}, {3,4}};
-
-    // myMatMul2D(&A[0][0], &B[0][0], &C[0][0], 2, 3, 3, 2);
-
-	// for (int i = 0; i < 2; ++i) {
-	// 	for (int j = 0; j < 2; ++j)
-	// 		printf(" %f ", C[i][j]);
-	// 		// std::cout << "C[" << i << "][" << j << "] = " << C[i][j] << "  ";
-	// 	// std::cout << std::endl;
-	// }
-
-
-
-
-	// float32 A[2][2] = {{1,2},{3,4}};
-	// float32 B[2][2] = {{10,20},{30,40}};
-	// float32 C[2][2];
-
-	// myMatAdd(&A[0][0], &B[0][0], &C[0][0], 2 , 2, 2, 2);
-	// //  C = {{11,22},{33,44}}
-
-	// for (int i = 0; i < 2; ++i) {
-	// 	for (int j = 0; j < 2; ++j)
-	// 		printf(" %f ", C[i][j]);
-	// 		// std::cout << "C[" << i << "][" << j << "] = " << C[i][j] << "  ";
-	// 	// std::cout << std::endl;
-	// 	printf("\n");
-	// }
-
-
-
-	// float32 W[2][3] = { {1,2,3}, {4,5,6} }; // 2 * 3
-	// float32 X[3] = 	{{10},{20},{30}};		// {10, 20, 30};
-	// float32 B[2] = {{100},{200}}; // {100, 200};
-	// float32 Y[2];
-
-	// myMatVecMulAdd(&W[0][0], X, B, Y, 2, 3, 3, 2);
-
-	// // Y[0] = 1*10 + 2*20 + 3*30 + 100 = 10+40+90+100 = 240
-	// // Y[1] = 4*10 + 5*20 + 6*30 + 200 = 40+100+180+200 = 520
-	// printf("%f	", Y[0]);
-	// printf("%f \n", Y[1]);
-
-
-
-	// // Test values
-    // double test_vals[] = {-3, -1, 0, 1, 3};
-    // int n = sizeof(test_vals) / sizeof(double);
-
-    // std::cout << "x\tSigmoid(x)\tSigmoid'(x)\n";
-    // std::cout << "---------------------------------\n";
-    // for(int i = 0; i < n; ++i) {
-    //     double x = test_vals[i];
-    //     double sx = mySigmoid(x);
-    //     double dsx = mySigmoidDeriv(x);
-    //     std::cout << x << "\t" << sx << "\t" << dsx << std::endl;
-    // }
-
-	// float32 weight_matrix[4] = {0.0, 0.5, 1.5, 2.0};
-	// float32 grads[4] = {0.0, 0.5, 1.5, 2.0};
-
-	// myGradientDescent(weight_matrix, grads, 0.5, 1, 4);
-
-	// for(int i = 0; i < 4; i++){
-	// 	printf(" %f 	", weight_matrix[i]);
-	// }
-
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	std::cout<<"---------------------------------------------------------------------------------------------------"<<std::endl;
+	
+	FILE* loss_file = fopen("../log_loss.txt", "w");
+	FILE* f = fopen("../log_weights.txt", "w");
 
 	const uint32 DataSamplesCount = 4;
 	const uint32 DataFeatures = 2;
@@ -126,26 +62,6 @@ int main() {
 		{0.0},
 	};
 
-	// printf("Data: \n");
-	// myPrintMatrix(&X[0][0], 4, 2);	
-	// printf("Labels: \n");
-	// myPrintMatrix(&y[0], 4, 1);
-
-	// float32 X_T[2][4];
-	// myMatrixTranspose(&X[0][0], &X_T[0][0], 4, 2);
-	// myPrintMatrix(&X[0][0], 4, 2);
-	// myPrintMatrix(&X_T[0][0], 2, 4);
-
-
-	// float32 X2[2][3] = {
-    // {1, 2, 3},
-    // {4, 5, 6}
-	// };
-	// float32 X_T2[3][2];
-	// myMatrixTranspose(&X2[0][0], &X_T2[0][0], 2, 3);
-	// myPrintMatrix(&X2[0][0], 2, 3);
-	// myPrintMatrix(&X_T2[0][0], 3, 2);
-
 
 	printf("Data: \n");
 	printf(" X1	       X2           y \n");
@@ -163,20 +79,20 @@ int main() {
 	const uint32 output_layer_size = 1;
 
 	float32 W1[hidden_layer_size][input_size];
-	float32 b1[hidden_layer_size][DataSamplesCount];
+	float32 b1[hidden_layer_size][1];
 	float32 W2[output_layer_size][hidden_layer_size];
-	float32 b2[output_layer_size][DataSamplesCount];	
+	float32 b2[output_layer_size][1];	
 	
 	float32 d_W1[hidden_layer_size][input_size];
-	float32 d_b1[hidden_layer_size][DataSamplesCount];
+	float32 d_b1[hidden_layer_size][1];
 	float32 d_W2[output_layer_size][hidden_layer_size];
-	float32 d_b2[output_layer_size][DataSamplesCount];
+	float32 d_b2[output_layer_size][1];
 
 
-	myRandomInitializerWithNormalDistribution(&W1[0][0], hidden_layer_size*input_size, 0.0f, 1.0f);
-	myRandomInitializerWithNormalDistribution(&b1[0][0], hidden_layer_size*DataSamplesCount, 0.0f, 1.0f);
-	myRandomInitializerWithNormalDistribution(&W2[0][0], output_layer_size*hidden_layer_size, 0.0f, 1.0f);
-	myRandomInitializerWithNormalDistribution(&b2[0][0], output_layer_size*DataSamplesCount, 0.0f, 1.0f);
+	myRandomInitializerWithNormalDistribution(&W1[0][0], hidden_layer_size*input_size, 0.0f, sqrtf(1.0f / input_size));
+	myRandomInitializerWithNormalDistribution(&b1[0][0], hidden_layer_size*1, 0.0f, sqrtf(1.0f / input_size));
+	myRandomInitializerWithNormalDistribution(&W2[0][0], output_layer_size*hidden_layer_size, 0.0f, sqrtf(1.0f / input_size));
+	myRandomInitializerWithNormalDistribution(&b2[0][0], output_layer_size*1, 0.0f, sqrtf(1.0f / input_size));
 
 	// W1 -> HxI , X -> 4xI , b1 -> Hx4
 	// z1 = W1.X + b1 = HxI.I*4 + H*4
@@ -194,40 +110,111 @@ int main() {
 	myMatrixTranspose(&X[0][0], &X_T[0][0], DataSamplesCount, DataFeatures);
 	float32 y_t[1][DataSamplesCount];
 	myMatrixTranspose(&y[0][0], &y_t[0][0], DataSamplesCount, 1);
+	float32 a1_t[DataSamplesCount][hidden_layer_size];
+	float32 W2_t[hidden_layer_size][output_layer_size];
 
-	
-	for(uint32 epoch = 0; epoch < 100; epoch++)
+	uint32 epochs = 100000;
+	for(uint32 epoch = 0; epoch < epochs; epoch++)
 	{
 		float32 loss = 0.0f;
 
 		myMatVecMulAdd(&W1[0][0], &X_T[0][0], &b1[0][0], &z1[0][0],
-							hidden_layer_size, input_size, DataSamplesCount, hidden_layer_size);
+							hidden_layer_size, input_size, DataFeatures, DataSamplesCount);
 		
 		for(uint32 i = 0; i < hidden_layer_size; i++)
 			for(uint32 j = 0; j < DataSamplesCount; j++)
 				a1[i][j] = mySigmoid(z1[i][j]);
 
+		myMatrixTranspose(&a1[0][0], &a1_t[0][0], hidden_layer_size, DataSamplesCount);	
+
 		myMatVecMulAdd(&W2[0][0], &a1[0][0], &b2[0][0], &z2[0][0], 
-							output_layer_size, hidden_layer_size, hidden_layer_size, output_layer_size);	
+							output_layer_size, hidden_layer_size, hidden_layer_size, DataSamplesCount);	
 				
+		myMatrixTranspose(&W2[0][0], &W2_t[0][0], output_layer_size, hidden_layer_size);
+
+
 		for(uint32 i = 0; i < output_layer_size; i++)
 			for(uint32 j = 0; j < DataSamplesCount; j++)
 				a2[i][j] = mySigmoid(z2[i][j]);
 
 
-		loss = myMeanSquaredError(&y_t[0][0], &a2[0][0], DataSamplesCount);
+		loss = myBinaryCrossEntropy(&y_t[0][0], &a2[0][0], DataSamplesCount);
 		
 
-		// Ahmed
+		myBinaryCrossEntropyGrad(&y_t[0][0], &a2[0][0], &d_a2[0][0], 4);
 		
+		for(uint32 i = 0; i < output_layer_size; i++)
+			for(uint32 j = 0; j < DataSamplesCount; j++)
+				d_z2[i][j] = d_a2[i][j] * mySigmoidDeriv(z2[i][j]);
+
+		myMatMul2D(&d_z2[0][0], &a1_t[0][0], &d_W2[0][0], output_layer_size, DataSamplesCount, DataSamplesCount, hidden_layer_size);		
+
+		for(uint32 i = 0; i < output_layer_size; i++){
+			d_b2[i][0] = 0.0f;
+			for(uint32 j = 0; j < DataSamplesCount; j++)
+				d_b2[i][0] += d_z2[i][j];
+			d_b2[i][0] /= DataSamplesCount;
+		}
+
+		myMatMul2D(&W2_t[0][0], &d_z2[0][0], &d_a1[0][0], hidden_layer_size, output_layer_size, output_layer_size, DataSamplesCount);		
+
+		for(uint32 i = 0; i < hidden_layer_size; i++)
+			for(uint32 j = 0; j < DataSamplesCount; j++)
+				d_z1[i][j] = d_a1[i][j] * mySigmoidDeriv(z1[i][j]);
+
+		myMatMul2D(&d_z1[0][0], &X[0][0], &d_W1[0][0], hidden_layer_size, DataSamplesCount, DataSamplesCount, input_size);		
+
+		for(uint32 i = 0; i < hidden_layer_size; i++){
+			d_b1[i][0] = 0.0f;
+			for(uint32 j = 0; j < DataSamplesCount; j++)
+				d_b1[i][0] += d_z1[i][j];
+			d_b1[i][0] /= DataSamplesCount;	
+		}
+			
+
+		myGradientDescent(&d_W2[0][0], &W2[0][0], 0.1, output_layer_size, hidden_layer_size);
+		myGradientDescent(&d_b2[0][0], &b2[0][0], 0.1, output_layer_size, 1);
+		myGradientDescent(&d_W1[0][0], &W1[0][0], 0.1, hidden_layer_size, input_size);
+		myGradientDescent(&d_b1[0][0], &b1[0][0], 0.1, hidden_layer_size, 1);
 
 
-
-
-		if(epoch%10 == 0){
+		
+		if(epoch%(epochs/10) == 0){
 			printf("Epcoh: %i, Loss: %f \n", epoch, loss);
+			fprintf(loss_file, "%d,%f\n", epoch, loss);
+
 		}
 	}
+	fclose(loss_file);
+	writeMatrixToFile(f, "W1", &W1[0][0], hidden_layer_size, input_size);
+	writeMatrixToFile(f, "b1", &b1[0][0], hidden_layer_size, 1);
+	writeMatrixToFile(f, "W2", &W2[0][0], output_layer_size, hidden_layer_size);
+	writeMatrixToFile(f, "b2", &b2[0][0], output_layer_size, 1);
+
+	fclose(f);
+
+
+
+	printf("\nFinal Predictions:\n");
+	for(uint32 i = 0; i < DataSamplesCount; i++){
+		printf("Input: [%f, %f], Prediction: %f, Target: %f\n",
+			X[i][0], X[i][1], a2[0][i], y[i][0]);
+	}
+	// printf("------------------------------------\n");
+	// printf("W1: \n");
+	// myPrintMatrix(&W1[0][0], 2, 2);
+	// printf("------------------------------------\n");
+	// printf("b1: \n");
+	// myPrintMatrix(&b1[0][0], 2, 1);
+	// printf("------------------------------------\n");
+	// printf("W2: \n");
+	// myPrintMatrix(&W2[0][0], 1, 2);
+	// printf("------------------------------------\n");
+	// printf("b2: \n");
+	// myPrintMatrix(&b2[0][0], 1, 1);
+	// printf("------------------------------------\n");
+
+
 
 	std::cout<<std::endl;
 	std::cout<<"---------------------------------------------------------------------------------------------------"<<std::endl;

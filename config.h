@@ -3,5 +3,4 @@
 
 #define PI 3.1416
 
-
 #endif // CONFIG_H
