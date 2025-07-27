@@ -218,7 +218,7 @@ int main() {
 		loss = myMeanSquaredError(&y_t[0][0], &a2[0][0], DataSamplesCount);
 		
 
-		d_a2 = 
+		// Ahmed
 		
 
 
