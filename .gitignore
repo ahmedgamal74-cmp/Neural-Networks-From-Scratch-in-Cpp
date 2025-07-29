@@ -4,3 +4,4 @@ trash_codes.txt
 build/
 *.exe
 test.cpp
+*.txt
